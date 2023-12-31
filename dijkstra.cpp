@@ -135,6 +135,13 @@ vector<int> dijkstra_improved(vector<vector<pair<int, int>>> &graph, int start) 
     return dist;
 }
 
+//NAV PEBEIGTS
+vector<int> dijkstra_improved2(vector<vector<pair<int, int>>> &graph, int start) {
+    // we can use library prioerity_queue
+    // this code usually is displayed online, but this code is not so clear
+    // thou priority queue works a bit better, faster than just set and very rare but sometimes we can win time using priority queue
+}
+
 int main() {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
