@@ -11,6 +11,8 @@
 // ALGO: in each step get node with smallest value and update all unvisited neighbours
 // Do this for each node
 
+// O(V*V + e)
+
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -55,6 +57,77 @@ vector<int> dijkstra(vector<vector<pair<int, int>>> &graph, int start) {
             int weight = p.second;
             if (dist[to] > dist[nearest] + weight) {
                 dist[to] = dist[nearest] + weight;
+            }
+        }
+    }
+    
+    return dist;
+}
+
+vector<int> dijkstra_with_path(vector<vector<pair<int, int>>> &graph, int start) {
+    vector<int> dist(graph.size(), INF); // contains distances from start to all nodes; infinity at the beginning
+    dist[start] = 0;
+    vector<int> from(graph.size(), -1);
+    
+    vector<bool> visited(graph.size()); //contains visited nodes (true/false)
+    
+    // main loop
+    for (int i = 0; i < graph.size(); i++) {
+        int nearest = -1;
+        //find nearest unvisited node;
+        // nearest means with smallest dist value
+        for (int v = 0; v < graph.size(); v++) {
+            if (!visited[v] && (nearest == -1 || dist[nearest] > dist[v])) {
+                nearest = v;
+            }
+        }
+
+        visited[nearest] = true;
+        
+        // update all unvisited neighbours of given node
+        for (auto &p : graph[nearest]) {
+            int to = p.first;
+            int weight = p.second;
+            if (dist[to] > dist[nearest] + weight) {
+                dist[to] = dist[nearest] + weight;
+                from[to] = nearest;
+            }
+        }
+    }
+
+    // all path from end to beginning
+    vector<int> path;
+    for (int v = finish; v != -1; v = from[v])
+        path.push_back(v);
+    reverse(path.begin(), path.en());
+    
+    return dist;
+}
+
+//NAV PABEIGTS
+vector<int> dijkstra_improved(vector<vector<pair<int, int>>> &graph, int start) {
+    vector<int> dist(graph.size(), INF); // contains distances from start to all nodes; infinity at the beginning
+    dist[start] = 0;
+    set<pair<int, int>> unvisitedVertices; //contains only unvisited vertices (distance to node and its number)
+    for (int v = 0; v < graph.size(); v++) {
+        unvisitedVertices.insert({dist[v], v});
+    }
+
+    // main loop
+    for (int i = 0; i < graph.size(); i++) {
+        int nearest = unvisitedVertices.begin()->second;
+        
+        // find nearest unvisited node;
+        // nearest means with smallest dist value
+        unvisitedVertices.erase(unvisitedVertices.begin());
+
+        for (auto &p : graph[nearest]) {
+            int to = p.first;
+            int weight = p.second;
+            if (dist[to] > dist[nearest] + weight) {
+                unvisitedVertices.erase({dist[to], to});
+                dist[to] = dist[nearest] + weight;
+                unvisitedVertices.insert({dist[to], to});                
             }
         }
     }
