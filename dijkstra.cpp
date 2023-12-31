@@ -20,6 +20,11 @@ using namespace std;
 
 const int INF = 1e9;
 
+
+// dijstra with finding minimum is better for Пло́тный граф — граф, в котором число рёбер E близко к максимально возможному у полного графа с числом вершин V:
+
+// dijkstr with sets is better forразреженным графом
+
 // returns array with distances from given (start/source) node
 vector<int> dijkstra(vector<vector<pair<int, int>>> &graph, int start) {
     vector<int> dist(graph.size(), INF); // contains distances from start to all nodes; infinity at the beginning
