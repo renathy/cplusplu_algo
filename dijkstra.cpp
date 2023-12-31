@@ -33,10 +33,18 @@ vector<int> dijkstra(vector<vector<pair<int, int>>> &graph, int start) {
                 nearest = v;
             }
         }
+
+        /*
+        // extra situation when graph is disconnected        
+        if (dist[nearest] == INF) {
+            break;
+        }*/
         
         visited[nearest] = true;
         
         // update all unvisited neighbours of given node
+        
+       // Works only from 17v
        /* for (auto &[to, weight] : graph[nearest]) {
             if (dist[to] > dist[nearest] + weight) {
                 dist[to] = dist[nearest] + weight;
@@ -67,11 +75,13 @@ int main() {
         cin >> a >> b >> weight;
         
         graph[a].push_back({b, weight});
-        graph[b].push_back({b, weight}); // not needed for oriented graph, only for non-oriented
+        graph[b].push_back({a, weight}); // not needed for oriented graph, only for non-oriented
     }
     
     int start; //source node
     cin >> start;
+    
+    // cout << start;
     
     vector <int> dist = dijkstra(graph, start);
     
