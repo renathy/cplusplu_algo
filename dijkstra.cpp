@@ -12,6 +12,7 @@
 // Do this for each node
 
 // O(V*V + e)
+// improved O((v+e)logV), assuming we have much more lines ->  O(E logV)
 
 #include <iostream>
 #include <vector>
